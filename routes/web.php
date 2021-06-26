@@ -28,8 +28,13 @@ $router->get('/test', function () {
     Mail::send(new sendEmailMaillable);
 });
 
-$router->get('/setup', function () {
+$router->get('/queue', function () {
     //Artisan::call('migrate');
     Artisan::call('queue:work');
     //Illuminate\Support\Facades\Artisan::call('migrate');
+});
+
+$router->get('/setup', function () {
+    Artisan::call('migrate');
+    //Artisan::call('queue:work');
 });
