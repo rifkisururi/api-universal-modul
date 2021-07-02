@@ -23,6 +23,7 @@ $router->get('/', function () use ($router) {
 });
 
 $router->POST('/sendEmail', 'NotifikasiController@sendEmail');
+$router->POST('/sendWA', 'NotifikasiController@sendWA');
 
 $router->get('/test', function () {
     Mail::send(new sendEmailMaillable);
@@ -36,5 +37,4 @@ $router->get('/queue', function () {
 
 $router->get('/setup', function () {
     Artisan::call('migrate');
-    //Artisan::call('queue:work');
 });

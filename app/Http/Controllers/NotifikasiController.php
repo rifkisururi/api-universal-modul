@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\sendEmailJob;
+use App\Jobs\sendWAJob;
 
 class NotifikasiController extends Controller
 {
@@ -31,6 +32,20 @@ class NotifikasiController extends Controller
         $data['Port'] = $request->Port;
 
         dispatch(new sendEmailJob($data));
+        return response()->json([
+            'meessage' => 'kirim email sedang di proses',
+            'status' => true
+        ], 200);
+    }
+
+    public function sendWA(Request $request)
+    {
+
+        $data['dest'] = $request->dest;
+        $data['isiPesan'] = $request->isiPesan;
+        $data['sender'] = $request->sender;
+
+        dispatch(new sendWAJob($data));
         return response()->json([
             'meessage' => 'kirim email sedang di proses',
             'status' => true
