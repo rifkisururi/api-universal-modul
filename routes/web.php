@@ -25,7 +25,7 @@ $router->get('/', function () use ($router) {
 $router->POST('/sendEmail', 'NotifikasiController@sendEmail');
 $router->POST('/sendWA', 'NotifikasiController@sendWA');
 
-$router->get('/sendWA2', 'NotifikasiController@sendWaLangsung');
+$router->get('/testSendWA', 'NotifikasiController@sendWaLangsung');
 
 
 $router->get('/test', function () {

@@ -33,30 +33,30 @@ class NotifikasiController extends Controller
 
         dispatch(new sendEmailJob($data));
         return response()->json([
-            'meessage' => 'kirim email sedang di proses',
+            'meessage' => 'pesan sedang dikirim',
             'status' => true
         ], 200);
     }
 
     public function sendWA(Request $request)
     {
-
         $data['dest'] = $request->dest;
         $data['isiPesan'] = $request->isiPesan;
         $data['sender'] = $request->sender;
 
         dispatch(new sendWAJob($data));
         return response()->json([
-            'meessage' => 'kirim email sedang di proses',
+            'meessage' => 'pesan sedang dikirim',
             'status' => true
         ], 200);
     }
 
     public function sendWaLangsung(Request $request)
     {
-        $sender =  "6287715762632";
-        $dest = "6285647451640";
-        $isiPesan = "ujicoba bos";
+        //$sender =  "6285161314421";
+        $sender = $_GET['sender'];
+        $dest = $_GET['dest'];
+        $isiPesan = $_GET['isiPesan'];
 
         // masukan data pengiriman pesan ke log
 
