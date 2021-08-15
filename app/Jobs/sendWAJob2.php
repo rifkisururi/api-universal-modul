@@ -28,7 +28,7 @@ class sendWAJob2 extends Job
     {
         $sender =  "D".$this->data['sender'];
         $dest = $this->data['dest'];
-        $isiPesan = str_replace("<br>","/n",$this->data['isiPesan']);
+        $isiPesan = str_replace("<br>","\n",$this->data['isiPesan']);
 
         $curl = curl_init();
 

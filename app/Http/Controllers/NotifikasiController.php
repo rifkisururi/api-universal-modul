@@ -100,7 +100,7 @@ class NotifikasiController extends Controller
 
         $sender = "D".$_GET['sender'];
         $dest = $_GET['dest'];
-        $isiPesan = str_replace("/n","<br>",$_GET['isiPesan']);
+        $isiPesan = str_replace("<br>","\n",$_GET['isiPesan']);
         
         $curl = curl_init();
 
