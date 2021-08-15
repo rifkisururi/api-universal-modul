@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Jobs\sendEmailJob;
 use App\Jobs\sendWAJob;
+use App\Jobs\sendWAJob2;
 
 class NotifikasiController extends Controller
 {
@@ -50,6 +51,19 @@ class NotifikasiController extends Controller
             'status' => true
         ], 200);
     }
+    
+    public function sendWA2(Request $request)
+    {
+        $data['dest'] = $request->dest;
+        $data['isiPesan'] = $request->isiPesan;
+        $data['sender'] = $request->sender;
+
+        dispatch(new sendWAJob2($data));
+        return response()->json([
+            'meessage' => 'pesan sedang dikirim',
+            'status' => true
+        ], 200);
+    }
 
     public function sendWaLangsung(Request $request)
     {
@@ -78,8 +92,37 @@ class NotifikasiController extends Controller
         ));
 
         $response = curl_exec($curl);
-        echo $response;
         curl_close($curl);
         echo $response;
+    }
+
+    public function sendWaLangsung2(Request $request){
+
+        $sender = "D".$_GET['sender'];
+        $dest = $_GET['dest'];
+        $isiPesan = str_replace("/n","<br>",$_GET['isiPesan']);
+        
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://warifki.herokuapp.com/send-message',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'POST',
+        CURLOPT_POSTFIELDS => 'number='.$dest.'&message='.$isiPesan.'&sender='.$sender,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/x-www-form-urlencoded'
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+
     }
 }
